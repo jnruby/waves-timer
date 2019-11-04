@@ -8,12 +8,12 @@ if($_POST['action']=="checkTimer")
 
 function connect(){
 	try{
-		if($conn = new PDO('mysql:host=localhost;dbname=synced_watch','usr','pw')){
+		if($conn = new PDO('mysql:host=localhost;dbname=synced_watch','root','timerbusinessTime')){
 			$conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 			return $conn;
 		}
 		else{
-			return "fuck";
+			return "nah";
 		}	
 	} catch(PDOException $e) {
 	    return 'Connection failed: ' . $e->getMessage();
