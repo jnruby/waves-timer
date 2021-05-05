@@ -1,6 +1,7 @@
 <html>
 	<head>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico' />
+<title>sync timer</title>
 
 		<script src="jquery.min.js"></script>
 
@@ -88,6 +89,7 @@
 		
 		</script>
 		<link rel="stylesheet" href="bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="stylesheet.css" media="screen"/>
 		<style type="text/css">
 			 
 		 #stopwatch{
@@ -96,16 +98,45 @@
 		 	font-size: 5em;
 		 } 
 
+		 .startbutton {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 20px 37px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+		 .stopbutton {
+  background-color: #FF0000;
+  border: none;
+  color: white;
+  padding: 20px 37px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+
+
 		</style>
 	</head>
 <body>
+
 		status:
 		<div id="status"></div>
 		<br/>
 
 		<div class="row">
 			<div class="col-xs-12 text-center">
-				stopwatch
+				sync stopwatch<br />
+				&copy; 2021 <a href="https://thisroom.org" target="_blank">thisroom.org </a>
 			</div>
 		</div>
 		<div class="row">
@@ -115,36 +146,9 @@
 		</div>
 
 		<br/>
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
+
+<div class="blockspace"></div>
+
 
 		<div id="setTime">
 			hours<input type="text" value="0" name="hours" id="inhours"/> 
@@ -156,8 +160,8 @@
 
 		main clock time: 
 		<div id="timer"></div>
-		<button onclick="stopTimer();return false;">stop u__u</button> 
-		<button onclick="startTimer();return false;">start ^__^</button>
+		<button class="stopbutton" onclick="stopTimer();return false;">stop</button> 
+		<button class="startbutton" onclick="startTimer();return false;">start</button>
 
 	</body>
 
