@@ -13,7 +13,7 @@ function connect(){
 			return $conn;
 		}
 		else{
-			return "nah";
+			return "nope";
 		}	
 	} catch(PDOException $e) {
 	    return 'Connection failed: ' . $e->getMessage();
