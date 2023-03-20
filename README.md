@@ -18,3 +18,7 @@ http://192.168.0.1/sync_stopwatch
 + multiple timers
 + show number of people connected
 + count down from specific time instead of up
+
+
+migration:
+ sudo mysql -uroot -ptimerbusinesstime < createtimertable.sql
