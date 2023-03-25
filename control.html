@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<link rel="shortcut icon" href="/favicon.ico?v=2" type="image/x-icon">
-		<title>waves timer</title>
+		<title>waves timer control panel</title>
 
 		<script src="jquery.min.js"></script>
 
@@ -111,7 +111,7 @@
 document.getElementById("demo").innerHTML =
 "" + window.location.href;
 </script>
-				waves timer<br />
+				waves timer <p style="color:red;"><b>CONTROL PANEL</b></p><br />
 				&copy; <script>document.write(new Date().getFullYear())</script> <a href="https://joshuanrubin.com"
                 target="_blank">Joshua Rubin</a>
 			</div>
@@ -128,20 +128,22 @@ document.getElementById("demo").innerHTML =
         <!-- <div class="blockspace"></div> -->
 
 
-		<!-- <div id="setTime">
+		<div id="setTime">
             <div class="helptext">set hours</div><input type="text" value="0" name="hours" id="inhours"/> 
 			<div class="helptext">set minutes</div><input type="text" value="0" name="minutes" id="inminutes"/> 
 			<div class="helptext">set seconds</div><input type="text" value="0" name="seconds" id="inseconds"/>
-        </div> -->
+        </div>
+		<div class="helptext col-xs-12 text-center">
+		<button class="stopbutton" onclick="stopTimer();return false;">stop</button> 
+		<button class="startbutton" onclick="startTimer();return false;">start</button>
+		</div>
 		<br/><br/><br/><br/>
 
-<!-- 
+
         <div class="helptext">
             computer clock time: 
 		<div id="timer"></div>
-        </div> -->
-		<!-- <button class="stopbutton" onclick="stopTimer();return false;">stop</button> 
-		<button class="startbutton" onclick="startTimer();return false;">start</button> -->
+        </div>
 
 	</body>
 

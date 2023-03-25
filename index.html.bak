@@ -128,20 +128,20 @@ document.getElementById("demo").innerHTML =
         <!-- <div class="blockspace"></div> -->
 
 
-		<!-- <div id="setTime">
+		<div id="setTime">
             <div class="helptext">set hours</div><input type="text" value="0" name="hours" id="inhours"/> 
 			<div class="helptext">set minutes</div><input type="text" value="0" name="minutes" id="inminutes"/> 
 			<div class="helptext">set seconds</div><input type="text" value="0" name="seconds" id="inseconds"/>
-        </div> -->
+        </div>
 		<br/><br/><br/><br/>
 
-<!-- 
+
         <div class="helptext">
             computer clock time: 
 		<div id="timer"></div>
-        </div> -->
-		<!-- <button class="stopbutton" onclick="stopTimer();return false;">stop</button> 
-		<button class="startbutton" onclick="startTimer();return false;">start</button> -->
+        </div>
+		<button class="stopbutton" onclick="stopTimer();return false;">stop</button> 
+		<button class="startbutton" onclick="startTimer();return false;">start</button>
 
 	</body>
 
