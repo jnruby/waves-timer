@@ -13,6 +13,17 @@ to get this to work on an intranet you will need a router and an ethernet cable.
 so something like 
 http://192.168.0.1/sync_stopwatch
 
+Timer viewers will use the base URL, controllers of the timer will use control.html.
+
+# installation
+Install LAMP stack, run migration for sql file, adjust mysql credentials as appropriate.
+
+
+# Added 2023
++ Dark mode
++ new style sheet
++ Control page (/control.html)
+
 
 ### future:
 + multiple timers
@@ -20,5 +31,4 @@ http://192.168.0.1/sync_stopwatch
 + count down from specific time instead of up
 
 
-migration:
- sudo mysql -uroot -ptimerbusinesstime < createtimertable.sql
+
