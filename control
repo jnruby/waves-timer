@@ -126,12 +126,19 @@ document.getElementById("demo").innerHTML =
 
         <!-- uncomment to put the controls at the bottom -->
         <!-- <div class="blockspace"></div> -->
-
+		<script>
+		if(/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream)
+		{
+			var inputs = document.querySelectorAll('input[type="number"]');
+			for(var i = inputs.length; i--;)
+				inputs[i].setAttribute('pattern', '\\d*');
+		}
+		</script>
 
 		<div id="setTime">
-            <div class="helptext">set hours</div><input type="text" value="0" name="hours" id="inhours"/> 
-			<div class="helptext">set minutes</div><input type="text" value="0" name="minutes" id="inminutes"/> 
-			<div class="helptext">set seconds</div><input type="text" value="0" name="seconds" id="inseconds"/>
+            <div class="numberbox">set hours</div><input type="number" value="0" name="hours" id="inhours"/> 
+			<div class="numberbox">set minutes</div><input type="number" value="0" name="minutes" id="inminutes"/> 
+			<div class="numberbox">set seconds</div><input type="number" value="0" name="seconds" id="inseconds"/>
         </div>
 		<div class="helptext col-xs-12 text-center">
 		<button class="stopbutton" onclick="stopTimer();return false;">stop</button> 
