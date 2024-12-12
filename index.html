@@ -87,6 +87,22 @@
 					});
 				},100);
 		
+				setInterval(function(){
+        $.ajax({
+            url: "timecheck.php",
+            type: "post", 
+            data: {action: "checkGetReady"},
+            success: function(results) {
+                results = $.parseJSON(results);
+                if (results.getReady == 1) {
+                    $(".get-ready-display").show();
+                } else {
+                    $(".get-ready-display").hide();
+                }
+            }
+        });
+    }, 100);
+
 		</script>
        <link rel="stylesheet" href="bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="stylesheet.css" media="screen"/>
@@ -121,7 +137,9 @@ document.getElementById("demo").innerHTML =
 				<div id="stopwatch"></div>
 			</div>
 		</div>
-
+		<div class="get-ready-display" style="display:none; color: red; font-size: 24px; text-align: center; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000;">
+			GET READY
+		</div>
 		<br/>
 
         <!-- uncomment to put the controls at the bottom -->
