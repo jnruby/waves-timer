@@ -150,6 +150,11 @@
                 <a href="https://joshuanrubin.com" target="_blank">Joshua Rubin</a>
             </div>
         </div>
+<!-- Get Ready Display -->
+        <div class="get-ready-display" style="display:none;">
+            GET READY
+        </div>
+
         <div class="row">
             <div class="stopwatch col-xs-12 text-center">
                 <div id="stopwatch"></div>
@@ -172,9 +177,5 @@
             <div id="timer"></div>
         </div>
         
-        <!-- Get Ready Display -->
-        <div class="get-ready-display" style="display:none;">
-            GET READY
-        </div>
-    </body>
+            </body>
 </html>
