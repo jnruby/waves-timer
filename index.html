@@ -95,9 +95,9 @@
             success: function(results) {
                 results = $.parseJSON(results);
                 if (results.getReady == 1) {
-                    $(".get-ready-display").show();
+					$(".get-ready-display").show().addClass('flashing');
                 } else {
-                    $(".get-ready-display").hide();
+					$(".get-ready-display").hide().removeClass('flashing');
                 }
             }
         });
@@ -137,10 +137,10 @@ document.getElementById("demo").innerHTML =
 				<div id="stopwatch"></div>
 			</div>
 		</div>
-		<div class="get-ready-display" style="display:none; color: red; font-size: 24px; text-align: center; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000;">
+		<div class="get-ready-display">
 			GET READY
 		</div>
-		<br/>
+				<br/>
 
         <!-- uncomment to put the controls at the bottom -->
         <!-- <div class="blockspace"></div> -->
