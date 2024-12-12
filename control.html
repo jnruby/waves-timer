@@ -18,21 +18,27 @@
                     }
                 });
             }
-            
+
             function startTimer() {
-                //set timer to start on db.
-                min = $("#inminutes").val();
-                sec = $("#inseconds").val();
-                hr = $("#inhours").val();
-                $.ajax({
-                    url:"timecheck.php",
-                    type:"post",
-                    data: {action:"startOrStopTimer", start:"1", hour:hr, minute:min, second:sec},
-                    success:function(results){
-                        console.log(results);
-                    }
-                });
-            }
+    //set timer to start on db.
+    min = $("#inminutes").val();
+    sec = $("#inseconds").val();
+    hr = $("#inhours").val();
+    
+    console.log('Starting timer with:', {hours: hr, minutes: min, seconds: sec});
+    
+    $.ajax({
+        url: "timecheck.php",
+        type: "post",
+        data: {action: "startOrStopTimer", start: "1", hour: hr, minute: min, second: sec},
+        success: function(results) {
+            console.log('Timer start response:', results);
+        },
+        error: function(xhr, status, error) {
+            console.error('Timer start error:', error);
+        }
+    });
+}
             
             // Function to toggle Get Ready state
             function toggleGetReady() {
@@ -61,44 +67,49 @@
                 });
             }
             
+            function formatTime(diffTime) {
+    let isNegative = diffTime < 0;
+    diffTime = Math.abs(diffTime);
+    
+    let h = new Date(diffTime).getUTCHours();
+    let m = new Date(diffTime).getUTCMinutes();
+    let s = new Date(diffTime).getUTCSeconds() % 60;
+    
+    // Convert to strings and pad with zeros
+    h = h.toString().padStart(2, '0');
+    m = m.toString().padStart(2, '0');
+    s = s.toString().padStart(2, '0');
+    
+    // Add negative sign if needed
+    return (isNegative ? '-' : '') + h + ':' + m + ':' + s;
+}
+ 
             // Periodic check function
             alwayscheck = setInterval(function(){
-                // Existing timer check
-                $.ajax({
-                    url:"timecheck.php",
-                    type:"post",
-                    data: {action:"checkTimer"},
-                    success:function(results){
-                        results = $.parseJSON(results);
-                        $("#timer").html(results.curtime.toString());
-                        
-                        if(results.started==1){
-                            startTime = new Date(results.start_time*1000).getTime();
-                            curTime = new Date(results.unixtime*1000).getTime();
-                            diffTime = curTime - startTime;
-                            h = new Date(diffTime).getUTCHours();
-                            h=h.toString();
-                            m = new Date(diffTime).getUTCMinutes().toString();
-                            s = new Date(diffTime).getUTCSeconds()%60;
-                            s = s.toString();
-                            if(s.length==1)
-                                s="0"+s;
-                            if(m.length==1)
-                                m="0"+m;
-                            if(h.length==1)
-                                h="0"+h;
-                            $("#stopwatch").html(h+":"+m+":"+s);
-                        }
-                        
-                        if(results.started==0){
-                            startTime = 0;
-                            $("#status").html("stopwatch off");
-                        }
-                        else{
-                            $("#status").html("ON!");
-                        }
-                    }
-                });
+    $.ajax({
+        url: "timecheck.php",
+        type: "post",
+        data: {action: "checkTimer"},
+        success: function(results){
+            results = $.parseJSON(results);
+            $("#timer").html(results.curtime.toString());
+            
+            if(results.started == 1){
+                startTime = new Date(results.start_time * 1000).getTime();
+                curTime = new Date(results.unixtime * 1000).getTime();
+                diffTime = curTime - startTime;
+                
+                $("#stopwatch").html(formatTime(diffTime));
+            }
+            
+            if(results.started == 0){
+                startTime = 0;
+                $("#status").html("stopwatch off");
+            } else {
+                $("#status").html("ON!");
+            }
+        }
+    });
                 
                 // Get Ready status check
                 $.ajax({
