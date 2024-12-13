@@ -53,65 +53,36 @@ function initializeTimerCheck() {
     }, 100);
 }
 
-// Get Ready check initialization
-function initializeGetReadyCheck(isControlPanel = false) {
-    return setInterval(function(){
-        $.ajax({
-            url: "timecheck.php",
-            type: "post",
-            data: {action: "checkGetReady"},
-            success: function(results) {
-                results = $.parseJSON(results);
-                if (results.getReady == 1) {
-                    $(".get-ready-display")
-                        .show()
-                        .addClass('flashing');  // Make sure flashing class is added
-                    if (isControlPanel) {
-                        $("#getReadyBtn")
-                            .data('active', true)
-                            .text("Stop Get Ready")
-                            .removeClass('btn-primary')
-                            .addClass('btn-danger');
-                    }
-                } else {
-                    $(".get-ready-display")
-                        .hide()
-                        .removeClass('flashing');  // Remove flashing class when hidden
-                    if (isControlPanel) {
-                        $("#getReadyBtn")
-                            .data('active', false)
-                            .text("Get Ready")
-                            .removeClass('btn-danger')
-                            .addClass('btn-primary');
-                    }
-                }
-            }
-        });
-    }, 100);
-}
-
-// Control panel specific functions
-function stopTimer() {
-    $.ajax({
-        url: "timecheck.php",
-        type: "post",
-        data: {action: "startOrStopTimer", start: "0"},
-        success: function(results){
-            console.log(results);
-        }
-    });
+function parseTimeString(timeStr) {
+    // Handle empty or invalid input
+    if (!timeStr) return { hour: "0", minute: "0", second: "0" };
+    
+    // Parse the time string (now handling negative times)
+    const isNegative = timeStr.startsWith('-');
+    const cleanTime = timeStr.replace('-', '');
+    const [hours, minutes, seconds] = cleanTime.split(':').map(num => num.padStart(2, '0'));
+    
+    // Apply negative sign if needed
+    const multiplier = isNegative ? -1 : 1;
+    
+    return {
+        hour: (parseInt(hours || 0) * multiplier).toString(),
+        minute: (parseInt(minutes || 0) * multiplier).toString(),
+        second: (parseInt(seconds || 0) * multiplier).toString()
+    };
 }
 
 function startTimer() {
-    if (!validateTimeInput()) return;
-    
     const timeInput = document.getElementById('timeInput');
-    const timeValues = parseTimeInput(timeInput.value || '00:00:00');
+    console.log('Starting timer with input value:', timeInput?.value);
     
-    if (!timeValues) {
-        document.getElementById('timeInputError').style.display = 'block';
+    if (!timeInput) {
+        console.error('Time input element not found!');
         return;
     }
+    
+    const timeValues = parseTimeString(timeInput.value);
+    console.log('Parsed time values:', timeValues);
     
     $.ajax({
         url: "timecheck.php",
@@ -125,10 +96,25 @@ function startTimer() {
         },
         success: function(results) {
             console.log('Timer start response:', results);
+        },
+        error: function(xhr, status, error) {
+            console.error('Timer start error:', error);
         }
     });
 }
 
+function stopTimer() {
+    $.ajax({
+        url: "timecheck.php",
+        type: "post",
+        data: {action: "startOrStopTimer", start: "0"},
+        success: function(results){
+            console.log(results);
+        }
+    });
+}
+
+// Get Ready functionality
 function toggleGetReady() {
     var $getReadyBtn = $("#getReadyBtn");
     var currentStatus = $getReadyBtn.data('active') ? 1 : 0;
@@ -146,34 +132,32 @@ function toggleGetReady() {
     });
 }
 
-// Time input handling functions
-function parseTimeInput(timeStr) {
-    const regex = /^(-)?(\d{1,2}):([0-5]\d):([0-5]\d)$/;
-    const match = timeStr.match(regex);
-    
-    if (!match) return null;
-    
-    const [, negative, hours, minutes, seconds] = match;
-    const multiplier = negative ? -1 : 1;
-    
-    return {
-        hour: (parseInt(hours) * multiplier).toString(),
-        minute: (parseInt(minutes) * multiplier).toString(),
-        second: (parseInt(seconds) * multiplier).toString()
-    };
-}
-
-function validateTimeInput() {
-    const timeInput = document.getElementById('timeInput');
-    const errorDiv = document.getElementById('timeInputError');
-    const value = timeInput.value;
-    
-    if (!value) {
-        errorDiv.style.display = 'none';
-        return true;
-    }
-    
-    const isValid = /^-?\d{1,2}:[0-5]\d:[0-5]\d$/.test(value);
-    errorDiv.style.display = isValid ? 'none' : 'block';
-    return isValid;
+function initializeGetReadyCheck(isControlPanel = false) {
+    return setInterval(function(){
+        $.ajax({
+            url: "timecheck.php",
+            type: "post",
+            data: {action: "checkGetReady"},
+            success: function(results) {
+                results = $.parseJSON(results);
+                if (results.getReady == 1) {
+                    $(".get-ready-display").show().addClass('flashing');
+                    if (isControlPanel) {
+                        $("#getReadyBtn").data('active', true)
+                                       .text("Stop Get Ready")
+                                       .removeClass('btn-primary')
+                                       .addClass('btn-danger');
+                    }
+                } else {
+                    $(".get-ready-display").hide().removeClass('flashing');
+                    if (isControlPanel) {
+                        $("#getReadyBtn").data('active', false)
+                                       .text("Get Ready")
+                                       .removeClass('btn-danger')
+                                       .addClass('btn-primary');
+                    }
+                }
+            }
+        });
+    }, 100);
 }
