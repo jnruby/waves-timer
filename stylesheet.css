@@ -11,17 +11,46 @@ body {
             display: flex;
             justify-content: center;
             align-items: center;
+            margin-bottom: 20px;  /* Reduced from default */
          }
 
 #stopwatch {
 line-height: 250px;  /* Match the min-height of .stopwatch */
         }
 
-.helptext {
+        .status-container {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 10px 0;
+            margin-bottom: 20px;
+        }
+        
+        .status-grid {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .status-item {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .status-label {
+            font-weight: bold;
+        }
+
+
+
+        .helptext {
             font-family: "Lucida Console", Monaco, monospace;
             color: white;
-            font-size: 15px; 
-         }
+            font-size: 15px;
+            margin: 5px 0;
+        }
+
+
 
 
          .startbutton {
@@ -74,9 +103,11 @@ line-height: 250px;  /* Match the min-height of .stopwatch */
 }
 
 .time-input-container {
-    margin: 20px auto;
+    margin: 100px auto 20px auto;  /* Reduced top margin from 200px to 100px */
     max-width: 300px;
     text-align: center;
+    position: relative;
+    z-index: 1;
 }
 
 .time-input {
@@ -120,4 +151,9 @@ line-height: 250px;  /* Match the min-height of .stopwatch */
     font-size: 14px;
     margin-top: 5px;
     display: none;
+}
+
+/* Adjust button container spacing */
+.helptext.col-xs-12.text-center {
+    margin-top: 20px;  /* Add some space between time input and buttons */
 }

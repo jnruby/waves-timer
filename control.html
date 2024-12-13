@@ -7,10 +7,24 @@
         <link rel="stylesheet" type="text/css" href="stylesheet.css" media="screen"/>
     </head>
     <body>
-        <div class="helptext">status:
-            <div id="status"></div>
+        <!-- Status Section -->
+        <div class="status-container">
+            <div class="row">
+                <div class="col-xs-12 text-center">
+                    <div class="status-grid">
+                        <div class="status-item">
+                            <span class="status-label">Status:</span>
+                            <span id="status">stopwatch off</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Computer Time:</span>
+                            <span id="timer"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <br/>
+
         <div class="row">
             <div class="helptext col-xs-12 text-center">
                 <p id="demo"></p>
@@ -59,10 +73,6 @@
             <button id="getReadyBtn" class="btn btn-primary" onclick="toggleGetReady();return false;" data-active="false">Get Ready</button>
         </div>
         <br/><br/><br/><br/>
-        <div class="helptext">
-            computer clock time:
-            <div id="timer"></div>
-        </div>
 
         <script type="text/javascript">
             //constantly looking at timecheck.
