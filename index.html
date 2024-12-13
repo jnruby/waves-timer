@@ -3,6 +3,7 @@
         <link rel="shortcut icon" href="/favicon.ico?v=2" type="image/x-icon">
         <title>waves timer</title>
         <script src="jquery.min.js"></script>
+        <script src="timer-common.js"></script>
         <link rel="stylesheet" href="bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="stylesheet.css" media="screen"/>
     </head>
@@ -15,9 +16,7 @@
         <div class="row">
             <div class="helptext col-xs-12 text-center">
                 <p id="demo"></p>
-                <script>
-                    document.getElementById("demo").innerHTML = "" + window.location.href;
-                </script>
+                <script>document.getElementById("demo").innerHTML = "" + window.location.href;</script>
                 waves timer<br />
                 &copy; <script>document.write(new Date().getFullYear())</script> 
                 <a href="https://joshuanrubin.com" target="_blank">Joshua Rubin</a>
@@ -33,72 +32,11 @@
                 <div id="stopwatch"></div>
             </div>
         </div>
-        <br/>
 
-        <script type="text/javascript">
-            var alwayscheck = false;
+        <script>
             var startTime = 0;
-
-            function formatTime(diffTime) {
-                let isNegative = diffTime < 0;
-                diffTime = Math.abs(diffTime);
-                
-                let h = new Date(diffTime).getUTCHours();
-                let m = new Date(diffTime).getUTCMinutes();
-                let s = new Date(diffTime).getUTCSeconds() % 60;
-                
-                // Convert to strings and pad with zeros
-                h = h.toString().padStart(2, '0');
-                m = m.toString().padStart(2, '0');
-                s = s.toString().padStart(2, '0');
-                
-                // Add negative sign if needed
-                return (isNegative ? '-' : '') + h + ':' + m + ':' + s;
-            }
-
-            // Timer check
-            alwayscheck = setInterval(function(){
-                $.ajax({
-                    url: "timecheck.php",
-                    type: "post",
-                    data: {action: "checkTimer"},
-                    success: function(results){
-                        results = $.parseJSON(results);
-                        
-                        if(results.started == 1){
-                            startTime = new Date(results.start_time * 1000).getTime();
-                            curTime = new Date(results.unixtime * 1000).getTime();
-                            diffTime = curTime - startTime;
-                            
-                            $("#stopwatch").html(formatTime(diffTime));
-                        }
-                        
-                        if(results.started == 0){
-                            startTime = 0;
-                            $("#status").html("stopwatch off");
-                        } else {
-                            $("#status").html("ON!");
-                        }
-                    }
-                });
-            }, 100);
-
-            // Get Ready check with flashing animation
-            setInterval(function(){
-                $.ajax({
-                    url: "timecheck.php",
-                    type: "post",
-                    data: {action: "checkGetReady"},
-                    success: function(results) {
-                        results = $.parseJSON(results);
-                        if (results.getReady == 1) {
-                            $(".get-ready-display").show().addClass('flashing');
-                        } else {
-                            $(".get-ready-display").hide().removeClass('flashing');
-                        }
-                    }
-                });
-            }, 100);
+            var alwayscheck = initializeTimerCheck();
+            initializeGetReadyCheck(false);  // false for display only
         </script>
     </body>
 </html>
