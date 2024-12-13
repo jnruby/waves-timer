@@ -1,6 +1,0 @@
-order deny,allow
-deny from all
-AuthType Basic
-AuthName "My Protected Folder"
-AuthUserFile /var/www/sync_stopwatch/.htpasswd
-require valid-user
