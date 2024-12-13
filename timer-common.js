@@ -63,20 +63,26 @@ function initializeGetReadyCheck(isControlPanel = false) {
             success: function(results) {
                 results = $.parseJSON(results);
                 if (results.getReady == 1) {
-                    $(".get-ready-display").show().addClass('flashing');
+                    $(".get-ready-display")
+                        .show()
+                        .addClass('flashing');  // Make sure flashing class is added
                     if (isControlPanel) {
-                        $("#getReadyBtn").data('active', true)
-                                       .text("Stop Get Ready")
-                                       .removeClass('btn-primary')
-                                       .addClass('btn-danger');
+                        $("#getReadyBtn")
+                            .data('active', true)
+                            .text("Stop Get Ready")
+                            .removeClass('btn-primary')
+                            .addClass('btn-danger');
                     }
                 } else {
-                    $(".get-ready-display").hide().removeClass('flashing');
+                    $(".get-ready-display")
+                        .hide()
+                        .removeClass('flashing');  // Remove flashing class when hidden
                     if (isControlPanel) {
-                        $("#getReadyBtn").data('active', false)
-                                       .text("Get Ready")
-                                       .removeClass('btn-danger')
-                                       .addClass('btn-primary');
+                        $("#getReadyBtn")
+                            .data('active', false)
+                            .text("Get Ready")
+                            .removeClass('btn-danger')
+                            .addClass('btn-primary');
                     }
                 }
             }

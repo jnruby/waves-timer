@@ -1,5 +1,6 @@
 <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/favicon.ico?v=2" type="image/x-icon">
         <title>waves timer control panel</title>
         <script src="jquery.min.js"></script>
@@ -8,81 +9,83 @@
         <link rel="stylesheet" type="text/css" href="stylesheet.css" media="screen"/>
     </head>
     <body>
-        <!-- Status Section -->
-        <div class="status-container">
-            <div class="row">
-                <div class="col-xs-12 text-center">
-                    <div class="status-grid">
-                        <div class="status-item">
-                            <span class="status-label">Status:</span>
-                            <span id="status">stopwatch off</span>
-                        </div>
-                        <div class="status-item">
-                            <span class="status-label">Computer Time:</span>
-                            <span id="timer"></span>
-                        </div>
+        <div class="main-container">
+            <!-- Status Section -->
+            <div class="status-container">
+                <div class="status-grid">
+                    <div class="status-item">
+                        <span class="status-label">Status:</span>
+                        <span id="status">stopwatch off</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">Computer Time:</span>
+                        <span id="timer"></span>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="helptext col-xs-12 text-center">
-                <p id="demo"></p>
-                <script>document.getElementById("demo").innerHTML = "" + window.location.href;</script>
-                waves timer <p style="color:red;"><b>CONTROL PANEL</b></p><br />
-                &copy; <script>document.write(new Date().getFullYear())</script> 
-                <a href="https://joshuanrubin.com" target="_blank">Joshua Rubin</a>
+            <!-- Title Section -->
+            <div class="text-center">
+                <div class="helptext">
+                    waves timer <p style="color:red;"><b>CONTROL PANEL</b></p>
+                </div>
             </div>
-        </div>
 
-        <div class="get-ready-display" style="display:none;">
-            GET READY
-        </div>
+            <!-- Get Ready Display -->
+            <div class="get-ready-display" style="display:none;">
+                GET READY
+            </div>
 
-        <div class="row">
-            <div class="stopwatch col-xs-12 text-center">
+            <!-- Stopwatch Display -->
+            <div class="stopwatch">
                 <div id="stopwatch"></div>
             </div>
-        </div>
 
-        <div id="setTime" class="time-input-container">
-            <div class="helptext">Set Timer</div>
-            <input type="text" 
-                   class="time-input" 
-                   id="timeInput" 
-                   placeholder="HH:MM:SS"
-                   pattern="^-?\d{0,2}:[0-5]\d:[0-5]\d$"
-                   title="Format: HH:MM:SS or -HH:MM:SS"/>
-            <div class="time-input-error" id="timeInputError">Please enter a valid time format (HH:MM:SS)</div>
-            <div class="time-presets">
-                <div class="time-preset" data-time="00:05:00">5min</div>
-                <div class="time-preset" data-time="00:10:00">10min</div>
-                <div class="time-preset" data-time="00:15:00">15min</div>
-                <div class="time-preset" data-time="00:30:00">30min</div>
-                <div class="time-preset" data-time="-00:00:30">-30sec</div>
-                <div class="time-preset" data-time="-00:01:00">-1min</div>
+            <!-- Timer Controls -->
+            <div class="time-input-container">
+                <div class="helptext">Set Timer</div>
+                <input type="text" 
+                       class="time-input" 
+                       id="timeInput" 
+                       placeholder="HH:MM:SS"
+                       pattern="^-?\d{0,2}:[0-5]\d:[0-5]\d$"
+                       title="Format: HH:MM:SS or -HH:MM:SS"/>
+                <div class="time-input-error" id="timeInputError">Please enter a valid time format (HH:MM:SS)</div>
+                <div class="time-presets">
+                    <div class="time-preset" data-time="00:05:00">5min</div>
+                    <div class="time-preset" data-time="00:10:00">10min</div>
+                    <div class="time-preset" data-time="00:15:00">15min</div>
+                    <div class="time-preset" data-time="00:30:00">30min</div>
+                    <div class="time-preset" data-time="-00:00:30">-30sec</div>
+                    <div class="time-preset" data-time="-00:01:00">-1min</div>
+                </div>
             </div>
-        </div>
 
-        <div class="helptext col-xs-12 text-center">
-            <button class="btn btn-danger stopbutton" onclick="stopTimer();return false;">Stop</button>
-            <button class="btn btn-success startbutton" onclick="startTimer();return false;">Start</button>
-            <button id="getReadyBtn" class="btn btn-primary" onclick="toggleGetReady();return false;" data-active="false">Get Ready</button>
+            <!-- Control Buttons -->
+            <div class="controls-container">
+                <button class="btn btn-danger stopbutton" onclick="stopTimer();return false;">Stop</button>
+                <button class="btn btn-success startbutton" onclick="startTimer();return false;">Start</button>
+                <button id="getReadyBtn" class="btn btn-primary" onclick="toggleGetReady();return false;" data-active="false">Get Ready</button>
+            </div>
+
+            <!-- Footer -->
+            <div class="text-center mt-4">
+                <div class="helptext">
+                    &copy; <script>document.write(new Date().getFullYear())</script> 
+                    <a href="https://joshuanrubin.com" target="_blank">Joshua Rubin</a>
+                </div>
+            </div>
         </div>
 
         <script>
             var startTime = 0;
             var alwayscheck = initializeTimerCheck();
-            initializeGetReadyCheck(true);  // true for control panel
+            initializeGetReadyCheck(true);
 
-            // Add event listeners after document load
             document.addEventListener('DOMContentLoaded', function() {
-                // Time input validation
                 const timeInput = document.getElementById('timeInput');
                 timeInput.addEventListener('input', validateTimeInput);
                 
-                // Time presets
                 document.querySelectorAll('.time-preset').forEach(preset => {
                     preset.addEventListener('click', function() {
                         timeInput.value = this.dataset.time;
